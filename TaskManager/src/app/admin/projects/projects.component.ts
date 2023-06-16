@@ -15,7 +15,7 @@ export class ProjectsComponent implements OnInit {
   editIndex: number = 0;
   deleteProject : Project = new Project();
   deleteIndex : any ;
-  searchBy:string = "projectName";
+  searchBy:string = "ProjectName";
   searchText:string = "";
 
   constructor(private projectService:ProjectsService){

@@ -1,46 +1,64 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable } from 'rxjs';
 import { Project } from './project';
-import { Observable, map } from 'rxjs';
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
+export class ProjectsService
+{
+  urlPrefix: string = "http://localhost:9090"; //make this as empty ("") if you are using asp.net core [without CORS]
 
-
-export class ProjectsService {
-  url = "http://localhost:9090/"
-
-  constructor(private httpclient: HttpClient){
-
+  constructor(private httpClient: HttpClient)
+  {
   }
 
-  getAllProjects(): Observable<Project[]>{
-    return this.httpclient.get<Project[]>(this.url + "api/projects",{responseType:"json"}).pipe(
-      (map(
-        (data:Project[]) =>{
-          for(let i=0;i<data.length;i++){
+  getAllProjects(): Observable<Project[]>
+  {
+    // var currentUser = { token: "" };
+    // var headers = new HttpHeaders();
+    // headers = headers.set("Authorization", "Bearer ");
+    // if (sessionStorage['currentUser'] != null)
+    // {
+    //   currentUser = JSON.parse(sessionStorage['currentUser']);
+    //   headers = headers.set("Authorization", "Bearer " + currentUser.token);
+    // }
+    return this.httpClient.get<Project[]>(this.urlPrefix + "/api/projects", { responseType: "json" })
+      .pipe(map(
+        (data: Project[]) =>
+        {
+          for (let i = 0; i < data.length; i++)
+          {
             data[i].teamSize = data[i].teamSize * 100;
           }
           return data;
         }
-      ))
-    )
+      ));
   }
 
-  insertProjects(newProject: Project): Observable<Project>{
-    return this.httpclient.post<Project>(this.url + "api/projects",newProject,{responseType:"json"})
+  insertProjects(newProject: Project): Observable<Project>
+  {
+    var requestHeaders = new HttpHeaders();
+    requestHeaders = requestHeaders.set("X-XSRF-TOKEN", sessionStorage["x-xsrf-token"]);
+    return this.httpClient.post<Project>(this.urlPrefix + "/api/projects", newProject, {responseType: "json" });
   }
 
-  updateProject(existingProject: Project): Observable<Project>{
-    return this.httpclient.put<Project>(this.url + "api/projects",existingProject,{responseType:"json"})
+  updateProject(existingProject: Project): Observable<Project>
+  {
+    return this.httpClient.put<Project>(this.urlPrefix + "/api/projects", existingProject, { responseType: "json" });
   }
 
-  deleteProject(ProjectID: number): Observable<string>{
-    return this.httpclient.delete<string>(this.url + "api/projects?ProjectID="+ ProjectID)
+  deleteProject(ProjectID: number): Observable<string>
+  {
+    return this.httpClient.delete<string>(this.urlPrefix + "/api/projects?ProjectID=" + ProjectID);
   }
 
-  searchProjects(searchBy: any, searchText:any):Observable<Project[]>{
-    return this.httpclient.get<Project[]>(this.url + "api/projects/search/"+searchBy+"/"+searchText,{responseType:"json"});
+  searchProjects(searchBy: string, searchText: string): Observable<Project[]>
+  {
+    return this.httpClient.get<Project[]>(this.urlPrefix + "/api/projects/search/" + searchBy + "/" + searchText, { responseType: "json" });
   }
 }
+
+
