@@ -1,1 +1,53 @@
-{"projects":[{"projectID":1,"projectName":"Bug Tracking System","dateOfStart":"2023-05-31","teamSize":7},{"projectID":2,"projectName":"COVID-19 Tracker","dateOfStart":"2020-03-15","teamSize":17},{"projectID":"3","projectName":"Paerking","dateOfStart":"2023-06-20","teamSize":"12"},{"projectID":"4","projectName":"parkings","dateOfStart":"2023-06-15","teamSize":"10"},{"projectID":"5","projectName":"parkings","dateOfStart":"2023-06-22","teamSize":"12"},{"projectID":"6","projectName":"Paerking","dateOfStart":"2023-06-14","teamSize":"123"}],"roles":[{"id":1,"roleName":"Admin"},{"id":2,"roleName":"Employee"}],"users":[{"id":1,"UserName":"admin","Email":"admin@gmail.com","Password":"Admin123#","Role":"Admin"}]}
+{
+  "projects": [
+    {
+      "projectID": 1,
+      "projectName": "Bug Tracking System",
+      "dateOfStart": "2023-05-31",
+      "teamSize": 7
+    },
+    {
+      "projectID": 2,
+      "projectName": "COVID-19 Tracker",
+      "dateOfStart": "2020-03-15",
+      "teamSize": 17
+    },
+    {
+      "projectID": "3",
+      "projectName": "Paerking",
+      "dateOfStart": "2023-06-20",
+      "teamSize": "12"
+    },
+    {
+      "projectID": "4",
+      "projectName": "parkings",
+      "dateOfStart": "2023-06-15",
+      "teamSize": "10"
+    },
+    {
+      "projectID": "5",
+      "projectName": "parkings",
+      "dateOfStart": "2023-06-22",
+      "teamSize": "12"
+    },
+    {
+      "projectID": "6",
+      "projectName": "Paerking",
+      "dateOfStart": "2023-06-14",
+      "teamSize": "123"
+    }
+  ],
+  "roles": [
+    { "id": 1, "roleName": "Admin" },
+    { "id": 2, "roleName": "Employee" }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "UserName": "admin",
+      "Email": "admin@gmail.com",
+      "Password": "Admin123#",
+      "Role": "Admin"
+    }
+  ]
+}
