@@ -62,7 +62,7 @@ function verifyXsrf(req, res, next) {
 app.get("/api/projects", [authenticateToken], users.getProjects);
 
 //POST api/projects
-app.post("/api/projects", [authenticateToken], users.postProjects);
+app.post("/api/projects", [authenticateToken, verifyXsrf], users.postProjects);
 
 //PUT api/projects
 app.put("/api/projects", [authenticateToken], users.putProjects);
@@ -75,6 +75,13 @@ app.get(
   "/api/projects/search/:searchby/:searchtext?",
   [authenticateToken],
   users.searchProjects
+);
+
+//GET /api/projects/searchbyprojectid/:ProjectID
+app.get(
+  "/api/projects/searchbyprojectid/:ProjectID",
+  [authenticateToken],
+  users.getProjectByProjectID
 );
 
 //GET api/clientlocations
