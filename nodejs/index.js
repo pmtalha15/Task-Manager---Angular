@@ -10,6 +10,7 @@ var { randomBytes } = require("crypto");
 var helpers = require("./helpers");
 var users = require("./projects");
 var clientlocations = require("./clientlocations");
+var countries = require("./countries");
 
 app.listen(9090, startup);
 function startup() {
@@ -62,7 +63,7 @@ function verifyXsrf(req, res, next) {
 app.get("/api/projects", [authenticateToken], users.getProjects);
 
 //POST api/projects
-app.post("/api/projects", [authenticateToken, verifyXsrf], users.postProjects);
+app.post("/api/projects", [authenticateToken], users.postProjects);
 
 //PUT api/projects
 app.put("/api/projects", [authenticateToken], users.putProjects);
@@ -111,6 +112,9 @@ app.delete(
   [authenticateToken],
   clientlocations.deleteClientLocations
 );
+
+//GET api/countries
+app.get("/api/countries", countries.getCountries);
 
 //POST /register
 app.post("/register", function (req, res) {
