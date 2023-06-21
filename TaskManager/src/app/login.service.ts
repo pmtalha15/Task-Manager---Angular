@@ -4,6 +4,7 @@ import { LoginViewModel } from './login-view-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { SignUpViewModel } from './sign-up-view-model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,24 @@ export class LoginService {
     }))
   }
 
+  getUserByEmail(Email:string):Observable<any>{
+    this.httpClient = new HttpClient(this.httpBackend);
+    return this.httpClient.get<any>(this.url+"api/getUserByEmail/"+Email,{responseType:"json"});
+  }
+
+  public Register(signUpViewModel:SignUpViewModel):Observable<any>{
+    this.httpClient = new HttpClient(this.httpBackend);
+    return this.httpClient.post<any>(this.url + "register",signUpViewModel,{responseType:"json", observe:"response"})
+    .pipe(map(response=>{
+      if(response){
+        this.currentUserName = response.body.userName;
+        sessionStorage['currentUser'] = JSON.stringify(response.body);
+        sessionStorage["x-xsrf-token"]= response.headers.get("XSRF-REQUEST-TOKEN");
+      }
+      return response.body;
+    }))
+  }
+
   public Logout(){
     sessionStorage.removeItem("currentUser");
     this.currentUserName = null;
@@ -42,4 +61,6 @@ export class LoginService {
       return true
     }
   }
+
+  
 }
