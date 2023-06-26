@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ProjectsService } from "../../projects.service";
 import { Project } from '../../project';
 import { ClientLocation } from '../../client-location';
 import { ClientLocationsService } from '../../client-locations.service';
 import { NgForm } from '@angular/forms';
 import * as $ from "jquery";
+import { ProjectComponent } from '../project/project.component';
 
 @Component({
   selector: 'app-projects',
@@ -24,9 +25,14 @@ export class ProjectsComponent implements OnInit
   deleteIndex: any = null;
   searchBy: string = "ProjectName";
   searchText: string = "";
+  isAllChecked: boolean = false;
 
   @ViewChild("newForm") newForm : NgForm | any = null;
   @ViewChild("editForm") editForm : NgForm | any = null;
+
+  @ViewChildren("prj") projs: QueryList<ProjectComponent> | any;
+  @ViewChild("prjId") prjId: ElementRef | any;
+
 
   constructor(private projectsService: ProjectsService, private clientLocationsService: ClientLocationsService)
   {
@@ -50,8 +56,18 @@ export class ProjectsComponent implements OnInit
     );
   }
 
+  isAllCheckedChange(event: any){
+    let proj = this.projs.toArray();
+    for(let i=0;i<proj.length;i++){
+      proj[i].isAllCheckedChange(this.isAllChecked)
+    }
+  }
+
   onNewClick(event:any){
     this.newForm.resetForm();
+    setTimeout(()=>{
+      this.prjId.nativeElement.focus();
+    },100);
   }
 
   onSaveClick()
@@ -179,5 +195,9 @@ export class ProjectsComponent implements OnInit
       {
         console.log(error);
       });
+  }
+
+  onHideShowDetails(event:any){
+    this.projectsService.toggleDetails();
   }
 }

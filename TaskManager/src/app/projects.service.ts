@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, ObservedValuesFromArray } from 'rxjs';
+import { BehaviorSubject, Observable, Observer, Subject} from 'rxjs';
 import { Project } from './project';
 import { map } from "rxjs/operators";
 
@@ -11,8 +11,15 @@ export class ProjectsService
 {
   urlPrefix: string = "http://localhost:9090"; //make this as empty ("") if you are using asp.net core [without CORS]
 
+  public MySubject : BehaviorSubject<boolean> | any;
+
   constructor(private httpClient: HttpClient)
   {
+    this.MySubject = new BehaviorSubject<boolean>(false);
+  }
+
+  toggleDetails(){
+    this.MySubject.next(!this.MySubject.value);
   }
 
   getProjectByProjectID(ProjectID:number):Observable<Project>{
