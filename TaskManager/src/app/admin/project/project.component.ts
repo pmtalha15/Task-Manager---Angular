@@ -1,4 +1,4 @@
-import { Component, ContentChild, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList, SimpleChanges } from '@angular/core';
+import { Component, ContentChild, ContentChildren, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/project';
 import { ProjectsService } from 'src/app/projects.service';
@@ -9,7 +9,7 @@ import { CheckBoxPrinterComponent } from '../check-box-printer/check-box-printer
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })
-export class ProjectComponent implements OnInit{
+export class ProjectComponent implements OnInit,OnChanges{
 
   @Input("currentProject") project:Project | any;
   @Input("recordIndex") i : number | any;
@@ -38,6 +38,8 @@ export class ProjectComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    console.log("------------OnInIt");
+    
     this.MySubscriptions = 
     this.projectsService.MySubject.subscribe((hide:boolean)=>{
       this.hideDetails = hide;
