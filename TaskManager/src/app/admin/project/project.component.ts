@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterContentInit, Component, ContentChild, ContentChildren, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, ContentChild, ContentChildren, DoCheck, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/project';
 import { ProjectsService } from 'src/app/projects.service';
@@ -9,7 +9,7 @@ import { CheckBoxPrinterComponent } from '../check-box-printer/check-box-printer
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })
-export class ProjectComponent implements OnInit,OnChanges, DoCheck, AfterContentInit, AfterContentChecked{
+export class ProjectComponent implements OnInit,OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked{
 
   @Input("currentProject") project:Project | any;
   @Input("recordIndex") i : number | any;
@@ -17,6 +17,8 @@ export class ProjectComponent implements OnInit,OnChanges, DoCheck, AfterContent
   @Output() editClick = new EventEmitter();
   @Output() deleteClick = new EventEmitter();
 
+  @ViewChild("tbl") tbl : ElementRef | any;
+ 
   MySubscriptions : Subscription | any;
 
   hideDetails: boolean = false;
@@ -25,6 +27,15 @@ export class ProjectComponent implements OnInit,OnChanges, DoCheck, AfterContent
   
   constructor(public projectsService : ProjectsService){
 
+  }
+  ngAfterViewInit(): void {
+   console.log("-------------ngAfterViewInit");
+   console.log(this.tbl);
+   
+   
+  }
+  ngAfterViewChecked(): void {
+    console.log("-------------ngAfterViewChecked");
   }
 
   ngOnChanges(simpleChanges:SimpleChanges){
