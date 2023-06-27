@@ -1,4 +1,4 @@
-import { Component, ContentChild, ContentChildren, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, Component, ContentChild, ContentChildren, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/project';
 import { ProjectsService } from 'src/app/projects.service';
@@ -9,7 +9,7 @@ import { CheckBoxPrinterComponent } from '../check-box-printer/check-box-printer
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })
-export class ProjectComponent implements OnInit,OnChanges, DoCheck{
+export class ProjectComponent implements OnInit,OnChanges, DoCheck, AfterContentInit, AfterContentChecked{
 
   @Input("currentProject") project:Project | any;
   @Input("recordIndex") i : number | any;
@@ -49,6 +49,16 @@ export class ProjectComponent implements OnInit,OnChanges, DoCheck{
 
   ngDoCheck(): void {
     console.log("---------------ngDoCheck");
+  }
+
+  ngAfterContentInit(): void {
+    console.log("-----------------ngAfterContentInit");
+    console.log(this.selectionBoxes.toArray());
+    
+  }
+
+  ngAfterContentChecked(){
+    console.log("-----------------ngAfterContentChecked");
   }
 
   onEditClick(event:any, i:any){
