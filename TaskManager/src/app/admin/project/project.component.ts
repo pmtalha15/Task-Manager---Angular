@@ -1,4 +1,4 @@
-import { Component, ContentChild, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList } from '@angular/core';
+import { Component, ContentChild, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/project';
 import { ProjectsService } from 'src/app/projects.service';
@@ -25,6 +25,16 @@ export class ProjectComponent implements OnInit{
   
   constructor(public projectsService : ProjectsService){
 
+  }
+
+  ngOnChanges(simpleChanges:SimpleChanges){
+    console.log("----------------onChanges");
+    for(let propName in simpleChanges){
+      let chng = simpleChanges[propName];
+      let cur = JSON.stringify(chng.currentValue);
+      let prev = JSON.stringify(chng.previousValue);
+      console.log(`${propName}:currentValue = ${cur}, previousValue = ${prev}`);
+    }
   }
 
   ngOnInit(): void {
