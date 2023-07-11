@@ -14,7 +14,7 @@
     </div>
 
     <div class="card-body">
-        <table class="table table-borderless" [hidden]="hideDetails" #tbl>
+        <table class="table table-borderless table-sm" [hidden]="hideDetails" #tbl>
             <tr>
                 <th>Date Of Start</th>
                 <td>{{project.dateOfStart}}</td>
@@ -22,12 +22,10 @@
 
             <tr>
                 <th>Team Size</th>
-                <td>{{project.teamSize}}</td>
-            </tr>
-
-            <tr>
-                <th>Team Size</th>
-                <td>{{project.teamSize}}</td>
+                <td>
+                    <span>{{project.teamSize}}</span>
+                    <span class="text-info">{{ project.teamSize | numberToWords}}</span>
+                </td>
             </tr>
 
             <tr>
