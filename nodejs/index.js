@@ -63,7 +63,7 @@ function verifyXsrf(req, res, next) {
 app.get("/api/projects", [authenticateToken], users.getProjects);
 
 //POST api/projects
-app.post("/api/projects", [authenticateToken], users.postProjects);
+app.post("/api/projects", [authenticateToken, verifyXsrf], users.postProjects);
 
 //PUT api/projects
 app.put("/api/projects", [authenticateToken], users.putProjects);
